@@ -46,11 +46,6 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/rewrite-target: /management
     kubernetes.io/proxy-cookie-path: /management /am/management
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_set_header   Host $host;
-        proxy_set_header   X-Real-IP $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Host $server_name;
   name: gravitee-am-management
 spec:
   rules:
@@ -73,11 +68,6 @@ metadata:
     certmanager.k8s.io/cluster-issuer: letsencrypt-prodv2
     kubernetes.io/ingress.class: nginx
     kubernetes.io/rewrite-target: /admin
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_set_header   Host $host;
-        proxy_set_header   X-Real-IP $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Host $server_name;
   name: gravitee-am-management-admin
 spec:
   rules:
