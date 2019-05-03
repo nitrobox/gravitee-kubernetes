@@ -6,3 +6,4 @@ nameOverride: ""
 fullnameOverride: ""
 
 hostname: ""
+mongodb-hostname: ""
