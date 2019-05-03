@@ -43,6 +43,7 @@ metadata:
   annotations:
     certmanager.k8s.io/cluster-issuer: letsencrypt-prodv2
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/configuration-snippet: |
         sub_filter_once on;
         sub_filter '<base href="/"' '<base href="/am/ui/"';
@@ -52,7 +53,7 @@ spec:
   - host: {{ .Values.hostname }}
     http:
       paths:
-      - path: /am/ui
+      - path: /am/ui(/|$)(.*)
         backend:
           serviceName: gravitee-am-webui
           servicePort: 80
