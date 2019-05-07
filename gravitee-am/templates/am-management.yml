@@ -46,6 +46,8 @@ metadata:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /management
     nginx.ingress.kubernetes.io/proxy-cookie-path: /management /am/management
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_redirect http://$host:$server_port/management/ /am/management/;
   name: gravitee-am-management
 spec:
   rules:
@@ -59,7 +61,7 @@ spec:
   tls:
   - hosts:
     - {{ .Values.hostname }}
-    secretName: api-custom-certv2
+    secretName: api-custom-certv3
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -68,6 +70,8 @@ metadata:
     certmanager.k8s.io/cluster-issuer: letsencrypt-prodv2
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /admin
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_redirect http://$http_host/admin/ http://$http_host/am/admin/;
   name: gravitee-am-management-admin
 spec:
   rules:
