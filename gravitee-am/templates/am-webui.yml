@@ -60,4 +60,4 @@ spec:
   tls:
   - hosts:
     - {{ .Values.hostname }}
-    secretName: api-custom-certv2
+    secretName: api-custom-certv3
