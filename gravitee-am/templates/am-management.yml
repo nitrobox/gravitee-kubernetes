@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gravitee-am-management
+  labels:
+    deployment: gravitee-am
 spec:
   selector:
     matchLabels:
@@ -12,6 +14,7 @@ spec:
     metadata:
       labels:
         app: am-management
+        deployment: gravitee-am
     spec:
       containers:
       - name: am-management
@@ -28,6 +31,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gravitee-am-management
+  labels:
+    deployment: gravitee-am
 spec:
   ports:
   - name: management
@@ -73,6 +78,8 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_redirect http://$http_host/admin/ http://$http_host/am/admin/;
   name: gravitee-am-management-admin
+  labels:
+    deployment: gravitee-am
 spec:
   rules:
   - host: {{ .Values.hostname }}
