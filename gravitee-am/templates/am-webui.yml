@@ -23,9 +23,9 @@ spec:
         - containerPort: 80
         env:
           - name: MGMT_API_URL
-            value: https://{{ .Values.hostname }}/am/
+            value: https://{{ .Values.hostname }}/
           - name: MGMT_UI_URL
-            value: https://{{ .Values.hostname }}/am/ui/
+            value: https://{{ .Values.hostname }}/ui/
 ---
 apiVersion: v1
 kind: Service
@@ -51,7 +51,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/configuration-snippet: |
         sub_filter_once on;
-        sub_filter '<base href="/"' '<base href="/am/ui/"';
+        sub_filter '<base href="/"' '<base href="/ui/"';
   name: gravitee-am-ui
   labels:
     deployment: gravitee-am
@@ -60,7 +60,7 @@ spec:
   - host: {{ .Values.hostname }}
     http:
       paths:
-      - path: /am/ui(/|$)(.*)
+      - path: /ui(/|$)(.*)
         backend:
           serviceName: gravitee-am-webui
           servicePort: 80

@@ -49,10 +49,10 @@ metadata:
   annotations:
     certmanager.k8s.io/cluster-issuer: letsencrypt-prodv2
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /management
-    nginx.ingress.kubernetes.io/proxy-cookie-path: /management /am/management
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_redirect http://$host:$server_port/management/ /am/management/;
+    # nginx.ingress.kubernetes.io/rewrite-target: /management/$2
+    # nginx.ingress.kubernetes.io/proxy-cookie-path: /management /am/management
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+    #   proxy_redirect https://$host:$server_port/management/ /am/management/;
   name: gravitee-am-management
   labels:
     deployment: gravitee-am
@@ -61,10 +61,14 @@ spec:
   - host: {{ .Values.hostname }}
     http:
       paths:
-      - path: /am/management
-        backend:
-          serviceName: gravitee-am-management
-          servicePort: 80
+        # - path: /am/management(/|$)(.*)
+        #   backend:
+        #     serviceName: gravitee-am-management
+        #     servicePort: 80
+        - path: /management
+          backend:
+            serviceName: gravitee-am-management
+            servicePort: 80
   tls:
   - hosts:
     - {{ .Values.hostname }}
@@ -76,9 +80,9 @@ metadata:
   annotations:
     certmanager.k8s.io/cluster-issuer: letsencrypt-prodv2
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /admin
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_redirect http://$http_host/admin/ http://$http_host/am/admin/;
+    # nginx.ingress.kubernetes.io/rewrite-target: /admin
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+    #   proxy_redirect https://$http_host/admin/ /am/admin/;
   name: gravitee-am-management-admin
   labels:
     deployment: gravitee-am
@@ -87,7 +91,11 @@ spec:
   - host: {{ .Values.hostname }}
     http:
       paths:
-      - path: /am/admin
+      # - path: /am/admin
+      #   backend:
+      #     serviceName: gravitee-am-management
+      #     servicePort: 80
+      - path: /admin
         backend:
           serviceName: gravitee-am-management
           servicePort: 80
