@@ -6,4 +6,4 @@ nameOverride: ""
 fullnameOverride: ""
 
 hostname: ""
-mongodb-hostname: ""
+mongodb_uri: "mongodb://mongo-mongodb-replicaset:27017/graviteeam?serverSelectionTimeoutMS=5000&connectTimeoutMS=5000&socketTimeoutMS=5000"
